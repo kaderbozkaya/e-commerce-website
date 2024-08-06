@@ -18,17 +18,17 @@ export default function Header() {
             placeholder="Search..."
             className="relative m-2 p-2 rounded-2xl outline-none w-[800px] text-xl border"
           />
-          <IoIosSearch className="absolute m-[760px] text-2xl text-red-600 cursor-pointer" />
+          <IoIosSearch className="absolute m-[760px] text-2xl text-[#fba702] cursor-pointer " />
           <a
             href=""
-            className="flex text-xl p-2 items-center group hover:text-red-600 ml-28"
+            className="flex text-xl p-2 items-center group hover:text-[#fba702] ml-28"
           >
             Giriş Yap
             <IoPersonOutline className="text-2xl" />
           </a>
           <a
             href=""
-            className=" flex text-xl p-2 items-center group hover:text-red-600 ml-28"
+            className=" flex text-xl p-2 items-center group hover:text-[#fba702] ml-28"
           >
             Sepetim
             <SlBasket className="text-2xl" />

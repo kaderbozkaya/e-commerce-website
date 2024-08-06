@@ -14,18 +14,20 @@ export default function Products({
             <a className="block relative h-48 rounded overflow-hidden cursor-pointer">
               <img
                 alt={title}
-                className="object-contain object-center w-full h-full block "
+                className="object-contain object-center w-[200px] h-[200px] block p-3 mx-auto"
                 src={image}
               />
             </a>
             <div className="mt-4">
-              <h3 className="text-gray-600 text-xs tracking-widest title-font mb-1">
+              {/* <h3 className="text-gray-600 text-xs tracking-widest title-font mb-1">
                 {category}
-              </h3>
-              <h2 className="text-gray-900 title-font text-lg font-medium">
+              </h3> */}
+              <h2 className="text-gray-900 title-font text-lg font-medium text-center">
                 {excerpt(title)}
               </h2>
-              <p className="mt-1">{price} TL</p>
+              <p className="mt-3 text-center font-bold text-[#8d39c1]">
+                {price} TL
+              </p>
             </div>
           </div>
         </div>

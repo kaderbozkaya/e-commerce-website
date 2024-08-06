@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Categories from "../components/Categories";
-
-import { Container, Row, Col } from "react-bootstrap";
+import Products from "../components/Products";
 
 export default function Home() {
-  const [state, setState] = useState([]);
+  const [products, setProducts] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [currentCategory, setCurrentCategory] = useState("All");
 
@@ -13,7 +12,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://fakestoreapi.com/products");
-        setState(response.data);
+        setProducts(response.data);
         setFilteredData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -42,36 +41,30 @@ export default function Home() {
     }
   };
 
+  const excerpt = (str) => {
+    return str.length > 30 ? str.substring(0, 30) + "..." : str;
+  };
+
   return (
     <>
       <Categories handleCategory={handleCategory} />
-
-      {filteredData.map((item) => (
-        <>
-          <Container className="py-4">
-            <Row className="justify-content-center">
-              <Col
-                xs={9}
-                md={7}
-                lg={6}
-                xl={4}
-                className="mb-3 mx-auto text-center"
-              >
-                <div key={item.id} className="bg-red-300 p-4 w-28">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-28 h-28"
-                  />
-                  <p className="font-bold">{item.title}</p>
-                  <p>{item.price}</p>
-                  {/* <p>{item.category}</p> */}
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </>
-      ))}
+      <div>
+        {filteredData.length === 0 ? (
+          <div className="text-center text-red-800 text-5xl">
+            No Products found
+          </div>
+        ) : (
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"> */}
+              {filteredData.map((item, i) => (
+                <Products key={i} {...item} excerpt={excerpt} />
+              ))}
+              {/* </div> */}
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }

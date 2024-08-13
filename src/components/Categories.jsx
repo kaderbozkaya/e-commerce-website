@@ -17,7 +17,7 @@ export default function Categories({ handleCategory }) {
 
   return (
     <>
-      <div className="flex w-full text-gray-600 mt-14">
+      <div className="flex max-md:w-[410px] h-20 justify-center items-center text-white mt-14 bg-orange-400 rounded mx-2">
         <div className="flex pb-3 text-sm m-1 md:text-lg w-full items-center md:justify-around">
           <button
             className={`md:w-24 ${

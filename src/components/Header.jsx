@@ -4,14 +4,15 @@ import { IoIosSearch } from "react-icons/io";
 import { IoPersonOutline } from "react-icons/io5";
 
 import { SlBasket } from "react-icons/sl";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header className="text-gray-600 shadow-lg max-sm:w-[425px] max-md:w-[475px]">
+    <header className="text-gray-600 shadow-lg w-full">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a href="">
+        <Link to={"/"}>
           <img src={logo} alt="logo" className="w-28 p-1" />
-        </a>
+        </Link>
         <nav className="md:ml-auto md:mr-auto flex  flex-wrap items-center text-base justify-between">
           <input
             type="text"

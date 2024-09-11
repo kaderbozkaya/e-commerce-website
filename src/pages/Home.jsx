@@ -50,9 +50,7 @@ export default function Home() {
       <Categories handleCategory={handleCategory} />
       <div>
         {filteredData.length === 0 ? (
-          <div className="text-center text-red-800 text-5xl">
-            No Products found
-          </div>
+          <div className="text-center text-red-800 text-5xl">Loading...</div>
         ) : (
           <div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">

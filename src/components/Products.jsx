@@ -1,4 +1,5 @@
 import { SlBasket } from "react-icons/sl";
+import { Link } from "react-router-dom";
 export default function Products({
   id,
   title,
@@ -9,7 +10,10 @@ export default function Products({
 }) {
   return (
     <section className="text-gray-600 ">
-      <div className="container px-5 py-24 mx-auto max-md:ml-12 ">
+      <Link
+        to={`/products/${id}`}
+        className="container px-5 py-24 mx-auto max-md:ml-12 "
+      >
         <div className=" flex flex-wrap">
           <div className="shadow-2xl w-[400px] h-[400px] p-2 m-2">
             <a className="block relative h-48 rounded overflow-hidden cursor-pointer">
@@ -20,9 +24,6 @@ export default function Products({
               />
             </a>
             <div className="mt-4">
-              {/* <h3 className="text-gray-600 text-xs tracking-widest title-font mb-1">
-                {category}
-              </h3> */}
               <h2 className="text-orange-400 title-font text-lg font-medium text-center">
                 {excerpt(title)}
               </h2>
@@ -31,14 +32,14 @@ export default function Products({
               </p>
             </div>
             <div className="flex items-center justify-center flex-col">
-              <button className="w-40 h-12 rounded-md bg-purple-600 flex mx-auto m-3 p-3 text-white hover:bg-orange-500">
-                Sepete Ekle
+              <button className="w-40 h-12 rounded-md bg-purple-600 flex mx-auto m-3 p-3 text-white hover:bg-[#9114df] ">
+                Add to Cart
                 <SlBasket className="text-2xl ml-3" />
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </section>
   );
 }

@@ -6,14 +6,13 @@ import { SlBasket } from "react-icons/sl";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0); //sepetteki ürün sayısını tutacak state
 
-  // Update cart count on page load or when cart changes
   useEffect(() => {
-    const carts = JSON.parse(localStorage.getItem("cart")) || [];
-    const totalItems = carts.reduce((acc, item) => acc + item.quantity, 0);
-    setCartCount(totalItems);
-  }, []);
+    const carts = JSON.parse(localStorage.getItem("cart")) || []; //localStorage'dan cart anahtarını alıyoruz onu JSON'a çeviriyoruz
+    const totalItems = carts.reduce((acc, item) => acc + item.quantity, 0); //tüm ürünlerin miktarını topluyoruz
+    setCartCount(totalItems); //sepet sayısını state'e kaydediyoruz
+  }, []); //sadece bileşen ilk yüklenince çalışacak
 
   return (
     <header className="text-gray-600 shadow-lg w-full">
@@ -42,7 +41,7 @@ export default function Header() {
               className="flex text-xl p-2 items-center group hover:text-[#fba702]"
             >
               <SlBasket className="text-2xl" />
-              Cart ({cartCount}) {/* Display the cart item count */}
+              Cart ({cartCount}) {/* sepetteki ürün sayısını gösteriyor */}
             </Link>
           </div>
         </nav>

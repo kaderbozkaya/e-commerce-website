@@ -1,9 +1,12 @@
-import { SlBasket } from "react-icons/sl";
 import { Link } from "react-router-dom";
-export default function Products({ id, title, price, category, image }) {
-  const excerpt = (text) =>
-    text.length > 20 ? `${text.substring(0, 20)}...` : text;
-
+export default function Products({
+  id,
+  title,
+  price,
+  category,
+  image,
+  excerpt,
+}) {
   return (
     <section className="text-gray-600 ">
       <Link

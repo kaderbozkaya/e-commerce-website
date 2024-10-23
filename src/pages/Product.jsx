@@ -45,6 +45,7 @@ export default function Product() {
       //ürün sepette yoksa
       localStorage.setItem(
         "cart",
+
         JSON.stringify([...cart, { ...product, quantity: 1 }]) //ürünü sepete ekle miktarı bir yap
       );
     }

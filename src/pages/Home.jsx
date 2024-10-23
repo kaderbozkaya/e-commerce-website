@@ -4,25 +4,25 @@ import Categories from "../components/Categories";
 import Products from "../components/Products";
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState("All");
+  const [products, setProducts] = useState([]); //tüm ürünlerin olduğu state
+  const [filteredData, setFilteredData] = useState([]); //filtrelenmiş ürünlerin olduğu state
+  const [currentCategory, setCurrentCategory] = useState("All"); //mevcut kategoriyi içeren state başlangıçta All
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://fakestoreapi.com/products");
-        setProducts(response.data);
-        setFilteredData(response.data);
+        setProducts(response.data); //apiden gelen ürünleri kaydediyoruz
+        setFilteredData(response.data); //apiden gelen ürünleri filtrelenmiş olarak kaydediyoruz
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, []);
+  }, []); //sadece bileşen yüklenince çalışacak bu yüzden [] boş
 
   const handleCategory = async (category) => {
-    setCurrentCategory(category);
+    setCurrentCategory(category); //mevcut kategoriyi güncelle
     try {
       const url =
         category === "All"
@@ -31,8 +31,8 @@ export default function Home() {
       const response = await axios.get(url);
       if (response.status === 200) {
         setFilteredData(response.data);
-        const newPath = category === "All" ? "/" : `/${category}`;
-        window.history.pushState({}, "", newPath);
+        const newPath = category === "All" ? "/" : `/${category}`; //url'i güncelliyoruz
+        window.history.pushState({}, "", newPath); //urlde tarayıcı geçmişini güncelliyoruz
       } else {
         console.error("Failed to load category");
       }
@@ -42,7 +42,7 @@ export default function Home() {
   };
 
   const excerpt = (str) => {
-    return str.length > 30 ? str.substring(0, 30) + "..." : str;
+    return str.length > 30 ? str.substring(0, 30) + "..." : str; //metin 30 karakterden uzunsa sonuna üç nokta koyup kısaltıyoruz
   };
 
   return (

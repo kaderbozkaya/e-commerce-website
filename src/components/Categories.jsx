@@ -11,8 +11,8 @@ export default function Categories({ handleCategory }) {
   const [activeIndex, setActiveIndex] = useState(null); //hangi kategorinin seçili olduğunu göstermek için. başlangıçta null yani hiç bir kategori seçili değil
 
   const handleClick = (index, item) => {
-    setActiveIndex(index);
-    handleCategory(item);
+    setActiveIndex(index); //hangi kategorinin aktif olduğunu belirlemek için
+    handleCategory(item); //üst bileşene seçilen kategoriyi gönderiyoruz üst bileşen seçilen kategoriye göre ürünleri filtreliyor.
   };
 
   return (
@@ -27,6 +27,7 @@ export default function Categories({ handleCategory }) {
           >
             All
           </button>
+          {/* options.map ile döngü oluşturuyoruz. key={i} ile her kategori için benzersiz bir anahtar ekliyoruz. eğer kategori aktifse stili değiştiriyoruz onClick ile kategoriyi aktif hale getiriyoruz */}
           {options.map((item, i) => (
             <div
               key={i}

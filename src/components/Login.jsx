@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // anasayfaya yönlendirmesi için
+  const navigate = useNavigate(); //giriş başarılı olunca anasayfaya yönlendirmesi için
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); //form gönderilince tarayıcının sayfayı yenilemesini engellemek için
     const response = await fetch("https://fakestoreapi.com/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      method: "POST", //sunucuya veri göndermek için
+      headers: { "Content-Type": "application/json" }, //içerik türü application/json olarak belirtildi gönderilen verinin JSON formatında olduğunu gösterir
+      body: JSON.stringify({ username, password }), //kullanıcı adı ve şifre json formatında isteğin body'sine ekleniyor.stringify ile js objesini JSON formatına dönüştürür
     });
 
-    const data = await response.json();
+    const data = await response.json(); //apiden gelen yanısı json formatına çeviriyor
     if (data.token) {
       navigate("/");
     } else {

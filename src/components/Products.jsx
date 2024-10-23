@@ -27,12 +27,6 @@ export default function Products({ id, title, price, category, image }) {
                 {price} TL
               </p>
             </div>
-            {/* <div className="flex items-center justify-center flex-col">
-              <button className="w-40 h-12 rounded-md bg-purple-600 flex mx-auto m-3 p-3 text-white hover:bg-[#9114df] ">
-                Add to Cart
-                <SlBasket className="text-2xl ml-3" />
-              </button>
-            </div> */}
           </div>
         </div>
       </Link>

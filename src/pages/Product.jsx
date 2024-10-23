@@ -1,47 +1,51 @@
-import axios from "axios";
+import axios from "axios"; //HTTP isteklerini yapmak için axios kütüphanesi eklendi
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom"; //URL'deki parametreleri almak için
 import { SlBasket } from "react-icons/sl";
 
 export default function Product() {
-  const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const { id } = useParams(); //URL'deki id parametresini alıyoruz bu idyi kullanarak ürünü çekiyoruz
+  const [product, setProduct] = useState({}); //ürünü saklamak için state oluşturuyoruz başlangıçta boş bir obje
 
+  //axios ile fakestore apisine get isteği atıyoruz.urldeki idyi kullanarak seçilen ürünü çekiyoruz
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `https://fakestoreapi.com/products/${id}`
         );
-        setProduct(response.data);
+        setProduct(response.data); //gelen veriyi state'e kaydediyoruz
         setFilteredData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    fetchData();
-  }, []);
-  //for cart
-  const handleCart = (product) => {
-    console.log(product);
+    fetchData(); //apiden veriyi çekiyoruz
+  }, [id]); //id değişince tekrar çalışacak
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const isProductExist = cart.find((item) => item.id === product.id);
+  //sepete ürün eklemek için fonksiyon:
+  const handleCart = (product) => {
+    console.log(product); //ürünü console yazdırıyoruz debug için
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || []; //sepeti localStorage'dan alıyoruz eğer boşsa boş bir dizi başlatıyoruz
+    const isProductExist = cart.find((item) => item.id === product.id); //sepette bu ürün var mı diye kontrol ediyoruz
     if (isProductExist) {
       const updatedCart = cart.map((item) => {
         if (item.id === product.id) {
+          //aynı ürünse miktarını arttırıyoruz
           return {
-            ...item,
+            ...item, //diğer özelliklerini koruyoruz
             quantity: item.quantity + 1,
           };
         }
-        return item;
+        return item; //diğer ürünler değişmeden kalıyor
       });
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      localStorage.setItem("cart", JSON.stringify(updatedCart)); //güncellenmiş sepeti localStorage'a kaydediyoruz
     } else {
+      //ürün sepette yoksa
       localStorage.setItem(
         "cart",
-        JSON.stringify([...cart, { ...product, quantity: 1 }])
+        JSON.stringify([...cart, { ...product, quantity: 1 }]) //ürünü sepete ekle miktarı bir yap
       );
     }
     alert("Product added to cart");

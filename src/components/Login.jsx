@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate'i ekleyin
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // useNavigate hook'u tanımlayın
+  const navigate = useNavigate(); // anasayfaya yönlendirmesi için
 
   const handleSubmit = async (e) => {
     e.preventDefault();

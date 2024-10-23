@@ -8,7 +8,7 @@ const options = [
 ];
 
 export default function Categories({ handleCategory }) {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null); //hangi kategorinin seçili olduğunu göstermek için. başlangıçta null yani hiç bir kategori seçili değil
 
   const handleClick = (index, item) => {
     setActiveIndex(index);

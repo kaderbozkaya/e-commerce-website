@@ -21,7 +21,33 @@ export default function Product() {
     };
     fetchData();
   }, []);
+  //for cart
+  const handleCart = (product) => {
+    console.log(product);
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const isProductExist = cart.find((item) => item.id === product.id);
+    if (isProductExist) {
+      const updatedCart = cart.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return item;
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } else {
+      localStorage.setItem(
+        "cart",
+        JSON.stringify([...cart, { ...product, quantity: 1 }])
+      );
+    }
+    alert("Product added to cart");
+  };
   if (!Object.keys(product).length > 0) return <div>Loading...</div>;
+
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -111,7 +137,10 @@ export default function Product() {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {product.price} TL
                 </span>
-                <button className="flex ml-auto text-white bg-[#8d39c1] border-0 py-2 px-6 focus:outline-none hover:bg-[#9114df] rounded">
+                <button
+                  className="flex ml-auto text-white bg-[#8d39c1] border-0 py-2 px-6 focus:outline-none hover:bg-[#9114df] rounded"
+                  onClick={() => handleCart(product)}
+                >
                   Add to Cart
                   <SlBasket className="text-2xl ml-3" />
                 </button>

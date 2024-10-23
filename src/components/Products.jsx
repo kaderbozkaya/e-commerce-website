@@ -1,13 +1,9 @@
 import { SlBasket } from "react-icons/sl";
 import { Link } from "react-router-dom";
-export default function Products({
-  id,
-  title,
-  price,
-  category,
-  image,
-  excerpt,
-}) {
+export default function Products({ id, title, price, category, image }) {
+  const excerpt = (text) =>
+    text.length > 20 ? `${text.substring(0, 20)}...` : text;
+
   return (
     <section className="text-gray-600 ">
       <Link
@@ -31,12 +27,12 @@ export default function Products({
                 {price} TL
               </p>
             </div>
-            <div className="flex items-center justify-center flex-col">
+            {/* <div className="flex items-center justify-center flex-col">
               <button className="w-40 h-12 rounded-md bg-purple-600 flex mx-auto m-3 p-3 text-white hover:bg-[#9114df] ">
                 Add to Cart
                 <SlBasket className="text-2xl ml-3" />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </Link>

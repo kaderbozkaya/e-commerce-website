@@ -29,13 +29,14 @@ export default function Header() {
           />
           <IoIosSearch className="absolute xl:m-[760px] text-2xl text-[#fba702] cursor-pointer max-md:mb-[80px] max-md:ml-[290px] md:ml-[230px] lg:ml-[560px]" />
           <div className="flex max-md:flex-col max-md:mx-auto">
-            <a
+            <Link
+              to={"/login"}
               href=""
               className="flex text-xl p-2 items-center group hover:text-[#fba702] "
             >
               <IoPersonOutline className="text-2xl" />
               Login
-            </a>
+            </Link>
             <Link
               to={"/cart"}
               className="flex text-xl p-2 items-center group hover:text-[#fba702]"

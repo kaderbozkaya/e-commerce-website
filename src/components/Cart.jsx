@@ -55,7 +55,7 @@ export default function Cart() {
         Cart is Empty{" "}
         <Link
           to={"/"}
-          className="bg-[#9114df] text-white inline-flex p-2 rounded"
+          className="bg-[#9114df] hover:bg-[#8d39c1]  text-white inline-flex p-2 rounded"
         >
           Start Shopping
         </Link>

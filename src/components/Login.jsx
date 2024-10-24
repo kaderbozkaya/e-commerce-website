@@ -14,7 +14,7 @@ export default function Login() {
       body: JSON.stringify({ username, password }), //kullanıcı adı ve şifre json formatında isteğin body'sine ekleniyor.stringify ile js objesini JSON formatına dönüştürür
     });
 
-    const data = await response.json(); //apiden gelen yanısı json formatına çeviriyor
+    const data = await response.json(); //apiden gelen yanıtı json formatına çeviriyor
     if (data.token) {
       navigate("/");
     } else {

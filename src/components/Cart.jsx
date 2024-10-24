@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { CiTrash } from "react-icons/ci";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -48,6 +50,7 @@ export default function Cart() {
     const updatedCart = carts.filter((item) => item.id !== id);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     navigate("/cart");
+    toast.error("Product deleted!");
   };
   if (!carts.length) {
     return (
@@ -65,6 +68,7 @@ export default function Cart() {
 
   return (
     <div className="container mx-auto mt-10">
+      <ToastContainer />
       <div className="flex shadow-md my-10">
         <div className="w-3/4 bg-white px-10 py-10">
           <div className="flex justify-between border-b pb-8">
@@ -82,9 +86,7 @@ export default function Cart() {
             <h3 className="font-semibold text-gray-600 text-center text-xs uppercase w-1/5">
               Quantity
             </h3>
-            {/* <h3 className="font-semibold text-gray-600 text-center text-xs uppercase w-1/5">
-              Price
-            </h3> */}
+
             <h3 className="font-semibold text-gray-600 text-center text-xs uppercase w-1/5">
               Total
             </h3>
@@ -127,9 +129,6 @@ export default function Cart() {
                       onClick={() => handleInc(cart?.id)}
                     />
                   </div>
-                  {/* <span className="text-center w-1/5 font-semibold text-sm">
-                    {cart?.price}
-                  </span> */}
 
                   <span className="text-center w-1/5 font-semibold text-sm">
                     {cart?.price * cart?.quantity}

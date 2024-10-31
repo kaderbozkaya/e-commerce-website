@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { CiTrash } from "react-icons/ci";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CartContext } from "../context/CartContext";
 
 export default function Cart() {
+  const { updateCartCount } = useContext(CartContext);
+  const [carts, setCarts] = useState(
+    JSON.parse(localStorage.getItem("cart")) || []
+  );
   const navigate = useNavigate();
-  const [total, setTotal] = useState(0);
-  const shippingCost = 40;
-  const carts = JSON.parse(localStorage.getItem("cart")) || [];
+  const [total, setTotal] = useState(0); //toplam ürünü tutması için state
+  const shippingCost = 40; //sabit kargo ücreti
 
   useEffect(() => {
     const total = carts.reduce((acc, item) => {
@@ -21,35 +25,27 @@ export default function Cart() {
 
   const handleInc = (id) => {
     const updatedCart = carts.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          quantity: item.quantity + 1,
-        };
-      }
+      if (item.id === id) return { ...item, quantity: item.quantity + 1 };
       return item;
     });
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    navigate("/cart");
+    setCarts(updatedCart);
+    updateCartCount(updatedCart);
   };
 
   const handleDec = (id) => {
     const updatedCart = carts.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          quantity: item.quantity - 1,
-        };
-      }
+      if (item.id === id && item.quantity > 1)
+        return { ...item, quantity: item.quantity - 1 };
       return item;
     });
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    navigate("/cart");
+    setCarts(updatedCart);
+    updateCartCount(updatedCart);
   };
+
   const removeProduct = (id) => {
     const updatedCart = carts.filter((item) => item.id !== id);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    navigate("/cart");
+    setCarts(updatedCart);
+    updateCartCount(updatedCart);
     toast.error("Product deleted!");
   };
   if (!carts.length) {
@@ -65,7 +61,6 @@ export default function Cart() {
       </div>
     );
   }
-
   return (
     <div className="container mx-auto mt-10">
       <ToastContainer />

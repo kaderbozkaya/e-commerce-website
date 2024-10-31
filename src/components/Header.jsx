@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import logo from "../assets/logo.png";
 import { IoIosSearch } from "react-icons/io";
 import { IoPersonOutline } from "react-icons/io5";
 import { SlBasket } from "react-icons/sl";
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 
 export default function Header() {
-  const [cartCount, setCartCount] = useState(0); //sepetteki ürün sayısını tutacak state
-
-  useEffect(() => {
-    const carts = JSON.parse(localStorage.getItem("cart")) || []; //localStorage'dan cart anahtarını alıyoruz onu JSON'a çeviriyoruz
-    const totalItems = carts.reduce((acc, item) => acc + item.quantity, 0); //tüm ürünlerin miktarını topluyoruz
-    setCartCount(totalItems); //sepet sayısını state'e kaydediyoruz
-  }, []); //sadece bileşen ilk yüklenince çalışacak
+  const { cartCount } = useContext(CartContext);
 
   return (
     <header className="text-gray-600 shadow-lg w-full">

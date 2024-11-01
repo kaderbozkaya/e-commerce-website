@@ -8,14 +8,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { CartContext } from "../context/CartContext";
 
 export default function Cart() {
-  const { updateCartCount } = useContext(CartContext);
+  const { updateCartCount } = useContext(CartContext); //cartcontext'ten güncellenmiş sepet sayısına erişim
   const [carts, setCarts] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
+    JSON.parse(localStorage.getItem("cart")) || [] //sepetteki ürünleri localden alıp state ekliyoruz
   );
-  const navigate = useNavigate();
+
   const [total, setTotal] = useState(0); //toplam ürünü tutması için state
   const shippingCost = 40; //sabit kargo ücreti
 
+  //sepet toplamını ger güncellemede hesaplamak için
   useEffect(() => {
     const total = carts.reduce((acc, item) => {
       return acc + item.price * item.quantity;
@@ -23,6 +24,7 @@ export default function Cart() {
     setTotal(total);
   }, [carts]);
 
+  //ürün miktarını arttırmak için
   const handleInc = (id) => {
     const updatedCart = carts.map((item) => {
       if (item.id === id) return { ...item, quantity: item.quantity + 1 };
@@ -31,7 +33,7 @@ export default function Cart() {
     setCarts(updatedCart);
     updateCartCount(updatedCart);
   };
-
+  //ürün miktarını azaltmak için
   const handleDec = (id) => {
     const updatedCart = carts.map((item) => {
       if (item.id === id && item.quantity > 1)
@@ -41,13 +43,14 @@ export default function Cart() {
     setCarts(updatedCart);
     updateCartCount(updatedCart);
   };
-
+  //ürünü sepetten kaldırmak için
   const removeProduct = (id) => {
     const updatedCart = carts.filter((item) => item.id !== id);
     setCarts(updatedCart);
     updateCartCount(updatedCart);
     toast.error("Product deleted!");
   };
+  //eğer sepet boşsa
   if (!carts.length) {
     return (
       <div className="text-2xl border mt-8 p-10 border-orange- flex justify-between">
@@ -129,10 +132,10 @@ export default function Cart() {
                     {cart?.price * cart?.quantity}
                   </span>
                   <div
-                    className="flex font-semibold hover:text-red-500 text-gray-500 text-xs cursor-pointer"
+                    className="flex font-semibold hover:text-red-500 text-gray-500  cursor-pointer text-lg items-center justify-center"
                     onClick={() => removeProduct(cart?.id)}
                   >
-                    <CiTrash className="mr-1 text-red-600" />
+                    <CiTrash className="mr-1 text-red-600 " />
                     Delete
                   </div>
                 </div>

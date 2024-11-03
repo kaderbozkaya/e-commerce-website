@@ -2,31 +2,39 @@ import React, { useCallback, useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
-// import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
+
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       if (!email) {
-        alert("Please enter an email address.");
+        toast.error("Please enter an email address.");
         return;
       }
       sendPasswordResetEmail(auth, email)
         .then(() => {
-          alert("We have sent you a reset password email.Check your inbox");
+          toast.success(
+            "We have sent you a reset password email. Check your inbox"
+          );
         })
         .catch((error) => {
-          alert("Failed to send email. Please try again.");
+          toast.error("Failed to send email. Please try again.");
         });
     },
     [email]
   );
+
   return (
-    // <ToastContainer>
     <div className="max-w-md mx-auto py-12">
-      <form onSubmit={handleSubmit}>
+      <ToastContainer />
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full md:mt-0 m-auto"
+      >
         <div className="relative mb-4">
           <label className="leading-7 text-sm text-gray-600">E mail</label>
           <input
@@ -41,9 +49,10 @@ export default function ForgotPassword() {
         <button className="border-0 py-2 px-8 focus:outline-none bg-[#9114df] hover:bg-[#8d39c1]  text-white rounded text-lg">
           Send reset password email
         </button>
+        <Link to={"/signin"} className="ml-auto mt-3">
+          <span className="text-purple-500"> Back to Sign In</span>
+        </Link>
       </form>
-      <Link to={"/signin"}>Back to Sign In</Link>
     </div>
-    // </ToastContainer>
   );
 }

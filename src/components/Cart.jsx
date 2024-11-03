@@ -16,7 +16,7 @@ export default function Cart() {
   const [total, setTotal] = useState(0); //toplam ürünü tutması için state
   const shippingCost = 40; //sabit kargo ücreti
 
-  //sepet toplamını ger güncellemede hesaplamak için
+  //sepet toplamını her güncellemede hesaplamak için
   useEffect(() => {
     const total = carts.reduce((acc, item) => {
       return acc + item.price * item.quantity;

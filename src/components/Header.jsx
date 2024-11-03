@@ -5,9 +5,11 @@ import { IoPersonOutline } from "react-icons/io5";
 import { SlBasket } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Header() {
   const { cartCount } = useContext(CartContext);
+  const { isAuthenticated, logout } = useContext(AuthContext);
 
   return (
     <header className="text-gray-600 shadow-lg w-full">
@@ -23,14 +25,24 @@ export default function Header() {
           />
           <IoIosSearch className="absolute xl:m-[760px] text-2xl text-[#fba702] cursor-pointer max-md:mb-[80px] max-md:ml-[290px] md:ml-[230px] lg:ml-[560px]" />
           <div className="flex max-md:flex-col max-md:mx-auto">
-            <Link
-              to={"/login"}
-              href=""
-              className="flex text-xl p-2 items-center group hover:text-[#fba702] "
-            >
-              <IoPersonOutline className="text-2xl" />
-              Login
-            </Link>
+            {isAuthenticated ? (
+              <button
+                onClick={logout}
+                className="flex text-xl p-2 items-center group hover:text-[#fba702]"
+              >
+                <IoPersonOutline className="text-2xl" />
+                Logout
+              </button>
+            ) : (
+              <Link
+                to={"/signin"}
+                href=""
+                className="flex text-xl p-2 items-center group hover:text-[#fba702] "
+              >
+                <IoPersonOutline className="text-2xl" />
+                Signin
+              </Link>
+            )}
             <Link
               to={"/cart"}
               className="flex text-xl p-2 items-center group hover:text-[#fba702]"

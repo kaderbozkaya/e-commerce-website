@@ -1,1 +1,1 @@
-https://api-k.netlify.app/
+E-commerce platform built with React and Firebase

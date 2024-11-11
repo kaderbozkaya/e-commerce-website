@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../assets/logo.png";
 import { IoIosSearch } from "react-icons/io";
 import { IoPersonOutline } from "react-icons/io5";
@@ -7,10 +7,17 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 
-export default function Header() {
+export default function Header({ setSearchTerm }) {
   const { cartCount } = useContext(CartContext);
   const { isAuthenticated, logout } = useContext(AuthContext);
+  const [localSearchTerm, setLocalSearchTerm] = useState("");
 
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value;
+    setLocalSearchTerm(searchValue);
+    setSearchTerm(searchValue); // Arama terimini ana bileşene ilet
+  };
+  console.log(setSearchTerm);
   return (
     <header className="text-gray-600 shadow-lg w-full">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -20,10 +27,12 @@ export default function Header() {
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-between">
           <input
             type="text"
+            value={localSearchTerm}
             placeholder="Search..."
-            className="relative m-2 p-2 rounded-2xl outline-none xl:w-[800px] text-xl border mx-auto lg:w-[600px]"
+            onChange={handleSearchChange}
+            className="relative w-[600px]  m-2 p-2 rounded-3xl outline-none border border-orange-500 "
           />
-          <IoIosSearch className="absolute xl:m-[760px] text-2xl text-[#fba702] cursor-pointer max-md:mb-[80px] max-md:ml-[290px] md:ml-[230px] lg:ml-[560px]" />
+          <IoIosSearch className="absolute text-2xl text-[#fba702] cursor-pointer ml-[570px]" />
           <div className="flex max-md:flex-col max-md:mx-auto">
             {isAuthenticated ? (
               <button

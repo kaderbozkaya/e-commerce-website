@@ -2,27 +2,33 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Categories from "../components/Categories";
 import Products from "../components/Products";
+import Header from "../components/Header";
 
 export default function Home() {
-  const [products, setProducts] = useState([]); //tüm ürünlerin olduğu state
-  const [filteredData, setFilteredData] = useState([]); //filtrelenmiş ürünlerin olduğu state
-  const [currentCategory, setCurrentCategory] = useState("All"); //mevcut kategoriyi içeren state başlangıçta All
+  const [products, setProducts] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentCategory, setCurrentCategory] = useState("All");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://fakestoreapi.com/products");
-        setProducts(response.data); //apiden gelen ürünleri kaydediyoruz
-        setFilteredData(response.data); //apiden gelen ürünleri filtrelenmiş olarak kaydediyoruz
+        setProducts(response.data);
+        setFilteredData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, []); //sadece bileşen yüklenince çalışacak bu yüzden [] boş
+  }, []);
+
+  const filteredProducts = filteredData.filter((product) =>
+    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleCategory = async (category) => {
-    setCurrentCategory(category); //mevcut kategoriyi güncelle
+    setCurrentCategory(category);
     try {
       const url =
         category === "All"
@@ -31,8 +37,8 @@ export default function Home() {
       const response = await axios.get(url);
       if (response.status === 200) {
         setFilteredData(response.data);
-        const newPath = category === "All" ? "/" : `/${category}`; //url'i güncelliyoruz
-        window.history.pushState({}, "", newPath); //urlde tarayıcı geçmişini güncelliyoruz
+        const newPath = category === "All" ? "/" : `/${category}`;
+        window.history.pushState({}, "", newPath);
       } else {
         console.error("Failed to load category");
       }
@@ -42,22 +48,23 @@ export default function Home() {
   };
 
   const excerpt = (str) => {
-    return str.length > 30 ? str.substring(0, 30) + "..." : str; //metin 30 karakterden uzunsa sonuna üç nokta koyup kısaltıyoruz
+    return str.length > 30 ? str.substring(0, 30) + "..." : str;
   };
 
   return (
     <>
+      <Header setSearchTerm={setSearchTerm} />
       <Categories handleCategory={handleCategory} />
       <div>
-        {filteredData.length === 0 ? (
-          <div className="text-center text-red-800 text-5xl">Loading...</div>
+        {filteredProducts.length === 0 ? (
+          <div className="text-center text-red-800 text-5xl">
+            No products found
+          </div>
         ) : (
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-              {filteredData.map((item, i) => (
-                <Products key={i} {...item} excerpt={excerpt} />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+            {filteredProducts.map((item, i) => (
+              <Products key={i} {...item} excerpt={excerpt} />
+            ))}
           </div>
         )}
       </div>

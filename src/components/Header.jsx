@@ -17,7 +17,7 @@ export default function Header({ setSearchTerm }) {
     setLocalSearchTerm(searchValue);
     setSearchTerm(searchValue); // Arama terimini ana bileşene ilet
   };
-  console.log(setSearchTerm);
+
   return (
     <header className="text-gray-600 shadow-lg w-full">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">

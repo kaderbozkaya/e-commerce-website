@@ -5,56 +5,26 @@ import { SlBasket } from "react-icons/sl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartContext } from "../context/CartContext";
+import { ProductContext } from "../context/Productscont";
 
 export default function Product() {
   const { id } = useParams(); //urlden gelen ürünün idsini alır
+  const { products } = useContext(ProductContext);
   const [product, setProduct] = useState({}); //ürünleri saklamak için state
-  const { cartCount, updateCartCount } = useContext(CartContext); //CartContext'ten sepet sayısına ve updateCartCount işlevine erişim
 
+  const { handleCart } = useContext(CartContext);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://fakestoreapi.com/products/${id}`
-        );
-        setProduct(response.data); //alınan veriler state eklenir
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    if (products.length > 0) {
+      const selectedProduct = products.find((item) => item.id === parseInt(id));
+      if (selectedProduct) {
+        setProduct(selectedProduct);
+      } else {
+        console.error("Product not found");
       }
-    };
-    fetchData();
-  }, [id]); //id değişince useEffect yeniden çalışır
-
-  //ürünü sepete eklemek için kodlar
-
-  const handleCart = (product) => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || []; //localstorageden cart verilerini al veya boş dizi oluştur
-    const isProductExist = cart.find((item) => item.id === product.id); //ürün sepette mi bilgisini al
-
-    let updatedCart;
-    if (isProductExist) {
-      updatedCart = cart.map((item) => {
-        if (item.id === product.id) {
-          //eğer ürün sepette varsa quantity arttır
-          return {
-            ...item,
-            quantity: item.quantity + 1,
-          };
-        }
-        return item;
-      });
-    } else {
-      //ürün sepette yoksa yeni olarak ekle
-      updatedCart = [...cart, { ...product, quantity: 1 }];
     }
+  }, [id, products]);
 
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); //localstoragede sepeti güncelle
-    updateCartCount(updatedCart); //sepet sayısı güncelle
-    toast.success("Product added to cart!");
-  };
-
-  if (!Object.keys(product).length > 0) return <div>Loading...</div>;
-
+  if (!product.id) return <div>Loading...</div>;
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 // Sepet bilgilerini tüm bileşenlerde kullanabilmek için bir Context oluşturuyoruz.
 export const CartContext = createContext();
@@ -35,11 +36,27 @@ export function CartProvider({ children }) {
     // Yeni sepet verisini localStorage'a JSON formatında kaydediyoruz.
     localStorage.setItem("cart", JSON.stringify(newCart));
   };
+  const handleCart = (product) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const isProductExist = cart.find((item) => item.id === product.id);
+    let updateCart;
+    if (isProductExist) {
+      updateCart = cart.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      updateCart = [...cart, { ...product, quantity: product.quantity || 1 }];
+    }
+    console.log("Updated Cart:", updateCart);
+    updateCartCount(updateCart);
+    localStorage.setItem("cart", JSON.stringify(updateCart));
+    toast.success("Product added to cart.");
+  };
 
   return (
     // Sepet verisini ve güncelleme fonksiyonunu Context Provider ile paylaşarak
     //children bileşenlerin bu verilere ulaşabilmesini sağlıyoruz.
-    <CartContext.Provider value={{ cartCount, updateCartCount }}>
+    <CartContext.Provider value={{ cartCount, updateCartCount, handleCart }}>
       {children} {/*children bileşenler buraya yerleşir */}
     </CartContext.Provider>
   );

@@ -1,4 +1,9 @@
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
+import { SlBasket } from "react-icons/sl";
+import { ProductContext } from "../context/Productscont";
+
 export default function Products({
   id,
   title,
@@ -7,14 +12,29 @@ export default function Products({
   image,
   excerpt,
 }) {
+  const { handleCart } = useContext(CartContext);
+  const { products } = useContext(ProductContext);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const selectedProduct = products.find((item) => item.id === parseInt(id));
+      if (selectedProduct) {
+        setProduct(selectedProduct);
+      } else {
+        console.error("Product not found");
+      }
+    }
+  }, [id, products]);
+
   return (
-    <section className="text-gray-600 ">
-      <Link
-        to={`/products/${id}`}
-        className="container px-5 py-24 mx-auto max-md:ml-12 "
-      >
-        <div className=" flex flex-wrap">
-          <div className="shadow-2xl w-[400px] h-[400px] p-2 m-2">
+    <section className="text-gray-600">
+      <div className=" flex flex-wrap">
+        <div className="shadow-2xl w-[400px] h-[400px] p-2 m-2 ">
+          <Link
+            to={`/products/${id}`}
+            className="container px-5 py-24 mx-auto max-md:ml-12"
+          >
             <a className="block relative h-48 rounded overflow-hidden cursor-pointer">
               <img
                 alt={title}
@@ -30,9 +50,18 @@ export default function Products({
                 {price} TL
               </p>
             </div>
-          </div>
+          </Link>
+          <button
+            className="flex m-auto text-white bg-[#8d39c1] border-0 py-2 px-6 focus:outline-none hover:bg-[#9114df] rounded"
+            onClick={() =>
+              handleCart({ ...product, quantity: product.quantity || 1 })
+            }
+          >
+            Add to Cart
+            <SlBasket className="text-2xl ml-3" />
+          </button>
         </div>
-      </Link>
+      </div>
     </section>
   );
 }

@@ -2,12 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Categories from "../components/Categories";
 import Products from "../components/Products";
-import Header from "../components/Header";
 
-export default function Home() {
+export default function Home({ searchTerm }) {
   const [products, setProducts] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+
   const [currentCategory, setCurrentCategory] = useState("All");
 
   useEffect(() => {
@@ -53,7 +52,6 @@ export default function Home() {
 
   return (
     <>
-      <Header setSearchTerm={setSearchTerm} />
       <Categories handleCategory={handleCategory} />
       <div>
         {filteredProducts.length === 0 ? (

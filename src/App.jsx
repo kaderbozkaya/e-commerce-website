@@ -20,7 +20,7 @@ function App() {
     <ProductProvider>
       <AuthProvider>
         <CartProvider>
-          <ToastContainer position="top-right" autoClose={3000} />
+          <ToastContainer position="top-right" autoClose={2000} />
           <Header setSearchTerm={setSearchTerm} />
           <Routes>
             <Route path="/" element={<Home searchTerm={searchTerm} />} />

@@ -11,6 +11,8 @@ export default function Product() {
   const { id } = useParams(); //urlden gelen ürünün idsini alır
   const { products } = useContext(ProductContext);
   const [product, setProduct] = useState({}); //ürünleri saklamak için state
+  const [isAdded, setIsAdded] = useState(false);
+  const [backG, setBackG] = useState("#8d39c1");
 
   const { handleCart } = useContext(CartContext);
   useEffect(() => {
@@ -24,11 +26,21 @@ export default function Product() {
     }
   }, [id, products]);
 
+  const handleButtonClick = () => {
+    handleCart({ ...product, quantity: product.quantity || 1 });
+    setTimeout(() => {
+      setIsAdded(false);
+      setBackG("#8d39c1");
+    }, 4000);
+    setIsAdded(true);
+    setBackG("#fb923c");
+  };
+
   if (!product.id) return <div>Loading...</div>;
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
-        <ToastContainer className="mt-40" />
+        <ToastContainer className="mt-40" autoClose="3000" />
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
@@ -49,10 +61,12 @@ export default function Product() {
                   {product.price} TL
                 </span>
                 <button
-                  className="flex ml-auto text-white bg-[#8d39c1] border-0 py-2 px-6 focus:outline-none hover:bg-[#9114df] rounded"
-                  onClick={() => handleCart(product)}
+                  className="flex m-auto text-white  border-0 py-2 px-6 focus:outline-none  hover:bg-[#9114df] rounded"
+                  onClick={handleButtonClick}
+                  style={{ backgroundColor: backG }}
+                  // disabled={isAdded}
                 >
-                  Add to Cart
+                  {isAdded ? "Added to Cart" : "Add to Cart"}
                   <SlBasket className="text-2xl ml-3" />
                 </button>
               </div>

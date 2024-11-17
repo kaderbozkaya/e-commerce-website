@@ -15,6 +15,8 @@ export default function Products({
   const { handleCart } = useContext(CartContext);
   const { products } = useContext(ProductContext);
   const [product, setProduct] = useState({});
+  const [isAdded, setIsAdded] = useState(false);
+  const [backG, setBackG] = useState("#8d39c1");
 
   useEffect(() => {
     if (products.length > 0) {
@@ -27,6 +29,15 @@ export default function Products({
     }
   }, [id, products]);
 
+  const handleButtonClick = () => {
+    handleCart({ ...product, quantity: product.quantity || 1 });
+    setTimeout(() => {
+      setIsAdded(false);
+      setBackG("#8d39c1");
+    }, 4000);
+    setIsAdded(true);
+    setBackG("#fb923c");
+  };
   return (
     <section className="text-gray-600">
       <div className=" flex flex-wrap">
@@ -52,12 +63,12 @@ export default function Products({
             </div>
           </Link>
           <button
-            className="flex m-auto text-white bg-[#8d39c1] border-0 py-2 px-6 focus:outline-none hover:bg-[#9114df] rounded"
-            onClick={() =>
-              handleCart({ ...product, quantity: product.quantity || 1 })
-            }
+            className="flex m-auto text-white  border-0 py-2 px-6 focus:outline-none  hover:bg-[#9114df] rounded"
+            onClick={handleButtonClick}
+            style={{ backgroundColor: backG }}
+            // disabled={isAdded}
           >
-            Add to Cart
+            {isAdded ? "Added to Cart" : "Add to Cart"}
             <SlBasket className="text-2xl ml-3" />
           </button>
         </div>

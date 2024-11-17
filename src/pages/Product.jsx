@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartContext } from "../context/CartContext";
 import { ProductContext } from "../context/Productscont";
+import { BsCartCheckFill } from "react-icons/bs";
 
 export default function Product() {
   const { id } = useParams(); //urlden gelen ürünün idsini alır
@@ -67,7 +68,11 @@ export default function Product() {
                   // disabled={isAdded}
                 >
                   {isAdded ? "Added to Cart" : "Add to Cart"}
-                  <SlBasket className="text-2xl ml-3" />
+                  {isAdded ? (
+                    <BsCartCheckFill className="text-2xl ml-3" />
+                  ) : (
+                    <SlBasket className="text-2xl ml-3" />
+                  )}
                 </button>
               </div>
             </div>

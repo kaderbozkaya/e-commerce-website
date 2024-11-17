@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SlBasket } from "react-icons/sl";

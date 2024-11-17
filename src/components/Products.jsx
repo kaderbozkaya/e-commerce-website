@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { SlBasket } from "react-icons/sl";
 import { ProductContext } from "../context/Productscont";
+import { BsCartCheckFill } from "react-icons/bs";
 
 export default function Products({
   id,
@@ -63,13 +64,17 @@ export default function Products({
             </div>
           </Link>
           <button
-            className="flex m-auto text-white  border-0 py-2 px-6 focus:outline-none  hover:bg-[#9114df] rounded"
+            className="flex m-auto text-white  border-0 py-2 px-6 focus:outline-none  hover:bg-[#9114df] rounded items-center justify-center"
             onClick={handleButtonClick}
             style={{ backgroundColor: backG }}
             // disabled={isAdded}
           >
             {isAdded ? "Added to Cart" : "Add to Cart"}
-            <SlBasket className="text-2xl ml-3" />
+            {isAdded ? (
+              <BsCartCheckFill className="text-2xl ml-3" />
+            ) : (
+              <SlBasket className="text-2xl ml-3" />
+            )}
           </button>
         </div>
       </div>

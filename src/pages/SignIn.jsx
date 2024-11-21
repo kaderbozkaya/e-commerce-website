@@ -37,7 +37,7 @@ export default function SignUp() {
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="max-w-md mx-auto py-12">
+      <div className="max-w-md m-auto py-12">
         <form
           onSubmit={handleSubmit}
           className="bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full md:mt-0 m-auto"

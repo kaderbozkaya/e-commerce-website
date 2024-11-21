@@ -40,7 +40,7 @@ export default function Products({
     setBackG("#fb923c");
   };
   return (
-    <section className="text-gray-600">
+    <section className="text-gray-600 m-auto max-sm:text-sm">
       <div className=" flex flex-wrap">
         <div className="shadow-2xl w-[400px] h-[400px] p-2 m-2 ">
           <Link

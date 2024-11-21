@@ -1,26 +1,18 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Categories from "../components/Categories";
 import Products from "../components/Products";
+import { ProductContext } from "../context/Productscont";
 
 export default function Home({ searchTerm }) {
-  const [products, setProducts] = useState([]);
+  // const [product, setProduct] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
+  const { products } = useContext(ProductContext);
   const [currentCategory, setCurrentCategory] = useState("All");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://fakestoreapi.com/products");
-        setProducts(response.data);
-        setFilteredData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+    setFilteredData(products);
+  }, [products]);
 
   const filteredProducts = filteredData.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
